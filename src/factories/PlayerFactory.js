@@ -20,6 +20,12 @@ const Player = () => {
         return health;
     }
 
+    function getDirections(){
+        {
+            return shipArray[0].getDirection();
+        }
+    }
+
     function changeDirections(){
         for(let i=0; i<shipArray.length; i++){
             shipArray[i].changeDirection();
@@ -28,7 +34,7 @@ const Player = () => {
 
     //Maybe need function to turn shipArray into placedShips
 
-    return {getCurrentHealth,changeDirections, playerBoard,placedShips,shipArray};
+    return {getCurrentHealth,getDirections, changeDirections, playerBoard,placedShips,shipArray};
 }
 
 export default Player;

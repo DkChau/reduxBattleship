@@ -1,3 +1,14 @@
+#root{
+    display:flex;
+}
+.userBoardContainer{
+    display:flex;
+    width:100vw;
+    height:100vh;
+    margin:20px;
+    justify-content: center;
+    align-items: center;
+}
 .userBoard{
     display:grid;
     width:500px;
@@ -8,12 +19,43 @@
     align-content: center;
     text-align: center;
 }
+.hidden{
+    display:none;
+}
+.changeDirection,.resetBoard,.startBtn{
+    margin-top: 20px;
+    grid-column: 1/11;
+}
+.empty{
+    background:#4a81f7;
+    border:1px black solid;
+}
 .shipContainer{
-    display:flex;
+    margin:50px;
+    height:auto;
+}
+.shipContainer.Vertical{
+    display:grid;
+    grid-template-columns:repeat(5,calc(360px/5));
+    grid-template-rows: auto;
+}
+.shipContainer.Horizontal{
+    display:grid;
+    height:auto;
+    grid-template-rows: repeat(5,auto);
+    grid-template-columns: 360px;
 }
 .shipSquare{
     width:50px;
     height:50px;
     border:1px solid black;
     background:green;
+}
+.ship.Horizontal{
+    display:flex;
+    margin:10px;
+}
+.ship.Vertical{
+    display:block;
+    margin:10px;
 }
