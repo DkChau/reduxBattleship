@@ -9,6 +9,7 @@ const cpu=()=>{
         Ship(3,'Submarine'),
         Ship(2,'PatrolBoat')
     ];
+    let sunkShips=[];
 
     function generateShips(){
         shipArray.forEach(ship=>{
@@ -63,19 +64,28 @@ const cpu=()=>{
         return true;  
     }
 
-    // function hitRegister(str,num){
-    //     for(let i=0; i<shipArray.length; i++){
-    //         if(shipArray[i].name===str){
-    //             gameBoard[num]='ship hit disabled';
-    //             shipArray[i].hit();
-    //             return shipArray[i].isSunk();
-    //         }
-    //         else{
-    //             gameBoard[num]='noShip hit disabled'
-    //         }
-    //     }
-    //     return false
-    // }
+    function hitRegister(loc){
+        let shipName='';
+        if(!(gameBoard[loc]==='empty')){
+            shipName=gameBoard[loc];
+            for(let i=0; i<shipArray.length; i++){
+                if(shipArray[i].getName()===shipName){
+                    shipArray[i].hit();
+                    if(shipArray[i].isSunk()){
+                        console.log('sunk' , shipName)
+                        gameBoard[loc]=gameBoard[loc]+' disabled';
+                        return{
+                            gameBoard:gameBoard,
+                            shipName:shipName,
+                        }
+                    }
+                }
+    
+            }
+        }
+        gameBoard[loc]=gameBoard[loc]+' disabled';
+        return {gameBoard:gameBoard};
+    }
 
     // function getCurrentHealth(){
     //     let health=0;
@@ -86,7 +96,7 @@ const cpu=()=>{
 
     // }
 
-    return {shipArray, gameBoard, generateShips};
+    return {shipArray, gameBoard, generateShips, hitRegister};
 }
 
 export default cpu;

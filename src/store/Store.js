@@ -10,6 +10,20 @@ export default createStore (
         player:Player(),
         gameState:false,
         cpu:cpu(),
+        cpuShips:{
+            Carrier:false,
+            Battleship:false,
+            Destroyer:false,
+            Submarine:false,
+            PatrolBoat:false,
+        },
+        playerShips:{
+            Carrier:false,
+            Battleship:false,
+            Destroyer:false,
+            Submarine:false,
+            PatrolBoat:false,
+        }
     },
     applyMiddleware(logger),
 )

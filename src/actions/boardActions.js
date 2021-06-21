@@ -20,3 +20,12 @@ export function gameStart(){
         payload:{}
     }
 }
+
+export function hitCpu(loc){
+    return {
+        type:'CPU_HIT',
+        payload:{
+            loc,
+        }
+    }
+}

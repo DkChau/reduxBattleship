@@ -10,15 +10,7 @@ const Player = () => {
         Ship(3,'Submarine'),
         Ship(2,'PatrolBoat')
     ];
-    let placedShips = [];
-
-    function getCurrentHealth(){
-        let health=0;
-        for(let i=0; i<placedShips.length; i++){
-            health+=placedShips[i].getHealth();
-        }
-        return health;
-    }
+    let sunkShips=[];
 
     function getDirections(){
         {
@@ -34,7 +26,7 @@ const Player = () => {
 
     //Maybe need function to turn shipArray into placedShips
 
-    return {getCurrentHealth,getDirections, changeDirections, playerBoard,placedShips,shipArray};
+    return {getDirections, changeDirections, playerBoard,shipArray};
 }
 
 export default Player;

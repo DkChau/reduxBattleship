@@ -52,7 +52,7 @@ function UserBoard (props) {
                 {props.player.playerBoard.gameBoard.map((square,index)=>{
                     return(
                         <button key={uniqid()} value={index} 
-                        className={square==='empty' ? 'empty' : 'shipSquare'}>
+                        className={square==='empty' ? 'empty' : square}>
                         </button>
                     )
                 })}
@@ -71,7 +71,7 @@ function UserBoard (props) {
                             id={ship.getName()} draggable={true} key={uniqid()} onDragStart={onDragStart}>
                                 {ship.shipDisplay.map(square=>{
                                     return (
-                                        <div key={uniqid()} id={square} className='shipSquare' onMouseOver={shipPart}>
+                                        <div key={uniqid()} id={square} className='shipSquare' onMouseDown={shipPart}>
                                         </div>
                                     )
                                 })}

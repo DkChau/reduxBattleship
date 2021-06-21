@@ -4,10 +4,13 @@ const _ = require('lodash')
 
 
 const boardReducer = (state,action) =>{
+    let tempState=_.cloneDeep(state);
+    let tempCpu=_.cloneDeep(state.cpu);
+    let tempPlayer=_.cloneDeep(state.player);
     switch(action.type){
         case 'PLACE_SHIP':
             let index=-1;
-            let tempState=_.cloneDeep(state);
+            tempState=_.cloneDeep(state);
             let tempObj=tempState.player.playerBoard.placeShips(
                 action.payload.length,
                 action.payload.name,
@@ -23,18 +26,38 @@ const boardReducer = (state,action) =>{
                         index=i;
                     }
                 }
-                tempState.player.placedShips=tempState.player.placedShips.concat(tempState.player.shipArray.splice(index,1))
-    
             }
+            tempState.player.shipArray.splice(index,1)
             state=tempState;
             break;
         case 'RESET_BOARD':
             state={...state,player:Player(),gameState:false,cpu:cpu()}
             break;
         case 'START_GAME':
-            let tempCpu=_.cloneDeep(state.cpu);
+            tempCpu=_.cloneDeep(state.cpu);
             tempCpu.gameBoard=tempCpu.generateShips();
             state={...state,gameState:true,cpu:tempCpu};
+            break;
+        case 'CPU_HIT':
+            let cpuShips=_.cloneDeep(state.cpuShips)
+            tempCpu=_.cloneDeep(state.cpu);
+            let tempCpuObj=tempCpu.hitRegister(action.payload.loc);
+            tempCpu.gameBoard=tempCpuObj.gameBoard
+
+            if('shipName' in tempCpuObj){
+                cpuShips[tempCpuObj.shipName]=true;
+            }
+
+            tempPlayer=_.cloneDeep(state.player);
+            tempPlayer.playerBoard.gameBoard=tempPlayer.playerBoard.generateHit();
+
+            state={
+                ...state,
+                cpu:tempCpu,
+                player:tempPlayer,
+                cpuShips:cpuShips
+            };
+
             break;
         default:
             break;

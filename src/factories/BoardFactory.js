@@ -1,5 +1,6 @@
 const Board = () => {
     let gameBoard = new Array(100).fill('empty');
+    let availableSquares = [...Array(100).keys()];
 
     function placeShips(length,name,direction,loc,selectedPart){
         loc=parseInt(loc);
@@ -56,16 +57,19 @@ const Board = () => {
         }
         return true; 
     }
-    function registerHit(name,loc){
-        if(gameBoard[loc]==='empty' && name==='empty'){
-            gameBoard[loc]='empty hit'
+    function generateHit(){
+        let randomLoc=Math.floor(Math.random()*availableSquares.length);
+        let loc=availableSquares[randomLoc];
+        gameBoard[loc]=gameBoard[loc]+' disabled';
+        availableSquares.splice(randomLoc,1);
+
+        if(availableSquares.length===0){
+            return gameBoard;
         }
-        else if(gameBoard[loc]==='empty'){
-            gameBoard[loc]=name+' hit'
-        }
+        return gameBoard;
     }
 
-    return {gameBoard,registerHit,placeShips}
+    return {gameBoard,generateHit,placeShips}
 }
 
 export default Board;
