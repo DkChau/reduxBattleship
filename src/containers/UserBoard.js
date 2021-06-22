@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState,useRef} from 'react';
+import {useState} from 'react';
 import {connect} from 'react-redux';
 import {placeShip,resetBoard,gameStart} from '../actions/boardActions';
 import uniqid from 'uniqid'

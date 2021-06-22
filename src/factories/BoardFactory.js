@@ -1,6 +1,14 @@
+import Ship from './ShipFactory'
 const Board = () => {
     let gameBoard = new Array(100).fill('empty');
     let availableSquares = [...Array(100).keys()];
+    let shipArray=[
+        Ship(5,'Carrier'),
+        Ship(4,'Battleship'),
+        Ship(3,'Destroyer'),
+        Ship(3,'Submarine'),
+        Ship(2,'PatrolBoat')
+    ];
 
     function placeShips(length,name,direction,loc,selectedPart){
         loc=parseInt(loc);
@@ -60,13 +68,32 @@ const Board = () => {
     function generateHit(){
         let randomLoc=Math.floor(Math.random()*availableSquares.length);
         let loc=availableSquares[randomLoc];
-        gameBoard[loc]=gameBoard[loc]+' disabled';
         availableSquares.splice(randomLoc,1);
 
-        if(availableSquares.length===0){
-            return gameBoard;
+        let shipName=''
+
+        if(!(gameBoard[loc]==='empty')){
+            shipName=gameBoard[loc];
+            console.log(shipName)
+            for(let i=0; i<shipArray.length; i++){
+                if(shipArray[i].getName()===shipName){
+                    console.log('found Ship!')
+                    shipArray[i].hit();
+                    if(shipArray[i].isSunk()){
+                        console.log('sunk' , shipName)
+                        gameBoard[loc]=gameBoard[loc]+' disabled';
+                        return{
+                            gameBoard:gameBoard,
+                            shipName:shipName,
+                        }
+                    }
+                }
+    
+            }
         }
-        return gameBoard;
+        gameBoard[loc]=gameBoard[loc]+' disabled';
+        return {gameBoard:gameBoard};
+
     }
 
     return {gameBoard,generateHit,placeShips}

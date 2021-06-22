@@ -10,12 +10,9 @@ const Player = () => {
         Ship(3,'Submarine'),
         Ship(2,'PatrolBoat')
     ];
-    let sunkShips=[];
 
     function getDirections(){
-        {
-            return shipArray[0].getDirection();
-        }
+        return shipArray[0].getDirection();
     }
 
     function changeDirections(){

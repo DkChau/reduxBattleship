@@ -31,7 +31,25 @@ const boardReducer = (state,action) =>{
             state=tempState;
             break;
         case 'RESET_BOARD':
-            state={...state,player:Player(),gameState:false,cpu:cpu()}
+            state={        
+                player:Player(),
+                gameState:false,
+                cpu:cpu(),
+                cpuShips:{
+                    Carrier:false,
+                    Battleship:false,
+                    Destroyer:false,
+                    Submarine:false,
+                    PatrolBoat:false,
+                },
+                playerShips:{
+                    Carrier:false,
+                    Battleship:false,
+                    Destroyer:false,
+                    Submarine:false,
+                    PatrolBoat:false,
+                },
+                whoseTurn:'player'}
             break;
         case 'START_GAME':
             tempCpu=_.cloneDeep(state.cpu);
@@ -47,17 +65,29 @@ const boardReducer = (state,action) =>{
             if('shipName' in tempCpuObj){
                 cpuShips[tempCpuObj.shipName]=true;
             }
-
-            tempPlayer=_.cloneDeep(state.player);
-            tempPlayer.playerBoard.gameBoard=tempPlayer.playerBoard.generateHit();
-
             state={
                 ...state,
                 cpu:tempCpu,
-                player:tempPlayer,
-                cpuShips:cpuShips
+                cpuShips:cpuShips,
+                whoseTurn:'cpu'
             };
 
+            break;
+        case 'PLAYER_HIT':
+            let playerShips=_.cloneDeep(state.playerShips)
+            tempPlayer=_.cloneDeep(state.player);
+            let tempPlayerObj=tempPlayer.playerBoard.generateHit();
+            tempPlayer.playerBoard.gameBoard=tempPlayerObj.gameBoard;
+
+            if('shipName' in tempPlayerObj){
+                playerShips[tempPlayerObj.shipName]=true;
+            }
+            state={
+                ...state,
+                player:tempPlayer,
+                playerShips:playerShips,
+                whoseTurn:'player'
+            }
             break;
         default:
             break;

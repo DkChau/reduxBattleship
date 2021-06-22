@@ -29,3 +29,12 @@ export function hitCpu(loc){
         }
     }
 }
+
+export function hitPlayer(){
+    return {
+        type:'PLAYER_HIT',
+        payload:{
+
+        }
+    }
+}

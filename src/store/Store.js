@@ -23,8 +23,10 @@ export default createStore (
             Destroyer:false,
             Submarine:false,
             PatrolBoat:false,
-        }
+        },
+        whoseTurn:'player',
+        statusDisplay:''
     },
-    applyMiddleware(logger),
+    // applyMiddleware(logger),
 )
 

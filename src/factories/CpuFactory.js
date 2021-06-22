@@ -9,7 +9,6 @@ const cpu=()=>{
         Ship(3,'Submarine'),
         Ship(2,'PatrolBoat')
     ];
-    let sunkShips=[];
 
     function generateShips(){
         shipArray.forEach(ship=>{

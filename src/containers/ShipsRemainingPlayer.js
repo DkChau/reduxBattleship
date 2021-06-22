@@ -1,11 +1,34 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-function ShipsRemainingPlayer () {
+function ShipsRemainingPlayer (props) {
     return(
-        <div>
-            hello
+        <div className={props.gameState===true ? '' : 'hidden'}>
+            <div 
+                className={props.playerShips.Battleship===true ? 'underline' : ''}>Battleship</div>
+            <div
+                className={props.playerShips.PatrolBoat===true ? 'underline' : ''}>PatrolBoat</div>
+            <div
+                className={props.playerShips.Submarine===true ? 'underline' : ''}>Submarine</div>
+            <div
+                className={props.playerShips.Destroyer===true ? 'underline' : ''}>Destroyer</div>
+            <div
+                className={props.playerShips.Carrier===true ? 'underline' : ''}>Carrier</div>
         </div>
     )
 }
 
-export default ShipsRemainingPlayer;
+
+const mapStateToProps = state => {
+    return {
+        playerShips:state.playerShips,
+        gameState:state.gameState
+    }
+}
+
+const mapDispatchToProps=dispatch=>{
+    return{
+    } 
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ShipsRemainingPlayer);
