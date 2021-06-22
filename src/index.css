@@ -1,11 +1,37 @@
+body{
+    margin:0;
+    padding:0;
+}
 #root{
     display:flex;
+    flex-direction: column;
+
+}
+#boardContainers{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.cpuRemaining,.playerRemaining{
+    font-size: 30px;
+    margin:0;
+    padding:0;
+}
+.announcementContainer{
+    display:flex;
+    align-items: center;
+    height:60px;
+    justify-content: center;
+    flex-direction: column;
+    width:100vw;
+    font-size: 30px;
+    font-weight:600;
 }
 .userBoardContainer{
     display:flex;
     width:100vw;
     height:100vh;
-    margin:20px;
+    margin:5px;
     justify-content: center;
     align-items: center;
 }
@@ -82,4 +108,20 @@ button:hover{
 
 .underline{
     text-decoration: line-through;
+    margin:10px;
+}
+.noDecoration{
+    margin:10px;
+}
+.gameOver{
+    background:black;
+    color:white;
+    width:100vw;
+    height:100%;
+    position:absolute;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    opacity:85%;
 }

@@ -53,6 +53,7 @@ const Board = () => {
         }
         else if(direction === 'Vertical'){
             loc=loc-parseInt(selectedPart)*10;
+            console.log(loc);
             if(loc<0){return false;}
 
             if(loc+(length-1)*10>=gameBoard.length){ return false; }

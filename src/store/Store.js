@@ -25,8 +25,9 @@ export default createStore (
             PatrolBoat:false,
         },
         whoseTurn:'player',
-        statusDisplay:''
+        statusDisplay:'',
+        gameEnd:false,
     },
-    // applyMiddleware(logger),
+    applyMiddleware(logger),
 )
 

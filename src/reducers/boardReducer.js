@@ -7,6 +7,8 @@ const boardReducer = (state,action) =>{
     let tempState=_.cloneDeep(state);
     let tempCpu=_.cloneDeep(state.cpu);
     let tempPlayer=_.cloneDeep(state.player);
+    let tempStatus=_.cloneDeep(state.statusDisplay);
+    let tempGameEnd=false;
     switch(action.type){
         case 'PLACE_SHIP':
             let index=-1;
@@ -24,10 +26,10 @@ const boardReducer = (state,action) =>{
                 for(let i=0; i<tempState.player.shipArray.length; i++){
                     if(tempState.player.shipArray[i].getName()===action.payload.name){
                         index=i;
+                        tempState.player.shipArray.splice(index,1)
                     }
                 }
             }
-            tempState.player.shipArray.splice(index,1)
             state=tempState;
             break;
         case 'RESET_BOARD':
@@ -49,7 +51,9 @@ const boardReducer = (state,action) =>{
                     Submarine:false,
                     PatrolBoat:false,
                 },
-                whoseTurn:'player'}
+                whoseTurn:'player',
+                statusDisplay:'',
+                gameEnd:false,}
             break;
         case 'START_GAME':
             tempCpu=_.cloneDeep(state.cpu);
@@ -57,6 +61,10 @@ const boardReducer = (state,action) =>{
             state={...state,gameState:true,cpu:tempCpu};
             break;
         case 'CPU_HIT':
+            if(state.gameEnd===true){
+                return state;
+            }
+            tempStatus='';
             let cpuShips=_.cloneDeep(state.cpuShips)
             tempCpu=_.cloneDeep(state.cpu);
             let tempCpuObj=tempCpu.hitRegister(action.payload.loc);
@@ -64,16 +72,33 @@ const boardReducer = (state,action) =>{
 
             if('shipName' in tempCpuObj){
                 cpuShips[tempCpuObj.shipName]=true;
+                tempStatus='Player has sunk Cpu\'s ' +tempCpuObj.shipName;
+                tempGameEnd=true;
+                for(let i in cpuShips)
+                {
+
+                    if(cpuShips[i]===false)
+                    {
+                        tempGameEnd=false;
+                        break;
+                    }
+                }
             }
             state={
                 ...state,
                 cpu:tempCpu,
                 cpuShips:cpuShips,
-                whoseTurn:'cpu'
+                whoseTurn:'cpu',
+                statusDisplay:tempStatus,
+                gameEnd:tempGameEnd
             };
 
             break;
         case 'PLAYER_HIT':
+            tempStatus='';
+            if(state.gameEnd===true){
+                return state;
+            }
             let playerShips=_.cloneDeep(state.playerShips)
             tempPlayer=_.cloneDeep(state.player);
             let tempPlayerObj=tempPlayer.playerBoard.generateHit();
@@ -81,14 +106,47 @@ const boardReducer = (state,action) =>{
 
             if('shipName' in tempPlayerObj){
                 playerShips[tempPlayerObj.shipName]=true;
+                tempStatus='Cpu has sunk Player\'s ' +tempPlayerObj.shipName;
+                tempGameEnd=true;
+                for(let i in playerShips)
+                {
+                    if(playerShips[i]===false)
+                    {
+                        tempGameEnd=false;
+                    }
+                }
             }
             state={
                 ...state,
                 player:tempPlayer,
                 playerShips:playerShips,
-                whoseTurn:'player'
+                whoseTurn:'player',
+                statusDisplay:tempStatus,
+                gameEnd:tempGameEnd
             }
             break;
+        case 'GAME_OVER':
+            state={        
+                player:Player(),
+                gameState:false,
+                cpu:cpu(),
+                cpuShips:{
+                    Carrier:false,
+                    Battleship:false,
+                    Destroyer:false,
+                    Submarine:false,
+                    PatrolBoat:false,
+                },
+                playerShips:{
+                    Carrier:false,
+                    Battleship:false,
+                    Destroyer:false,
+                    Submarine:false,
+                    PatrolBoat:false,
+                },
+                whoseTurn:'player',
+                statusDisplay:'',
+                gameEnd:false,}
         default:
             break;
     }

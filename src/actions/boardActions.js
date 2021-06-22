@@ -38,3 +38,12 @@ export function hitPlayer(){
         }
     }
 }
+
+export function gameOver(){
+    return{
+        type:'GAME_OVER',
+        payload:{
+
+        }
+    }
+}

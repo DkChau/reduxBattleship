@@ -9,7 +9,7 @@ function CpuBoard (props) {
         props.hitCpu(e.target.value);
         setTimeout(()=>{
             props.hitPlayer();
-        },0)
+        },1000)
     }
     return(
         <div className={props.gameState===true ? 'userBoardContainer' : 'hidden'}>
