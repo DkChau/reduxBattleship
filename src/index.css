@@ -93,6 +93,10 @@ body{
     background:green;
     transition: color 0.3s ease-in-out;
 }
+.cpu{
+    background:#4a81f7;
+    border:1px black solid;
+}
 .disabled{
     background:#bb4b4b;
 }
@@ -120,6 +124,7 @@ button:hover{
     height:100%;
     position:absolute;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 60px;

@@ -9,6 +9,16 @@ const Board = () => {
         Ship(3,'Submarine'),
         Ship(2,'PatrolBoat')
     ];
+    let cpuDirection='';
+    let cardinals={
+        down:10,
+        up:-10,
+        left:-1,
+        right:1,
+    }
+    let cardinalArray=[];
+    let nextLoc=0;
+    let remIndex=0;
 
     function placeShips(length,name,direction,loc,selectedPart){
         loc=parseInt(loc);
@@ -53,7 +63,6 @@ const Board = () => {
         }
         else if(direction === 'Vertical'){
             loc=loc-parseInt(selectedPart)*10;
-            console.log(loc);
             if(loc<0){return false;}
 
             if(loc+(length-1)*10>=gameBoard.length){ return false; }
@@ -67,33 +76,179 @@ const Board = () => {
         return true; 
     }
     function generateHit(){
-        let randomLoc=Math.floor(Math.random()*availableSquares.length);
-        let loc=availableSquares[randomLoc];
-        availableSquares.splice(randomLoc,1);
-
         let shipName=''
 
-        if(!(gameBoard[loc]==='empty')){
-            shipName=gameBoard[loc];
-            console.log(shipName)
-            for(let i=0; i<shipArray.length; i++){
-                if(shipArray[i].getName()===shipName){
-                    console.log('found Ship!')
-                    shipArray[i].hit();
-                    if(shipArray[i].isSunk()){
-                        console.log('sunk' , shipName)
-                        gameBoard[loc]=gameBoard[loc]+' disabled';
-                        return{
-                            gameBoard:gameBoard,
-                            shipName:shipName,
-                        }
+        //If the cpu has not yet hit a ship it will continue to randomize locations until it registers a hit
+        if(cardinalArray.length===0 && cpuDirection===''){
+            let randomLoc=Math.floor(Math.random()*availableSquares.length);
+            let loc=availableSquares[randomLoc];
+            availableSquares.splice(randomLoc,1);
+            if(!(gameBoard[loc]==='empty')){
+                for(let key in cardinals){ //INCASE ANYTHING MESSES UP ITS BECAUSE OF THIS MODULUS BECAUSE IT WORKED PERFECT BEFORE IT
+                    if(availableSquares.includes(loc+cardinals[key]) && (loc+cardinals[key])%10!=0){
+                        cardinalArray.push({
+                            cardDirection:key,
+                            position:(loc+cardinals[key]),
+                            value:cardinals[key],
+                        });
                     }
                 }
-    
+                shipName=gameBoard[loc];
+                for(let i=0; i<shipArray.length; i++){
+                    if(shipArray[i].getName()===shipName){
+                        shipArray[i].hit();
+                        gameBoard[loc]=gameBoard[loc]+' disabled';
+                        if(shipArray[i].isSunk()){
+                            return{
+                                gameBoard:gameBoard,
+                                shipName:shipName,
+                            }
+                        }
+                    }
+        
+                }
+            }
+            else{
+                gameBoard[loc]=gameBoard[loc]+' disabled';
+                return {gameBoard:gameBoard};
             }
         }
-        gameBoard[loc]=gameBoard[loc]+' disabled';
+        //Once a hit on a ship is registered, the cpu will continue to search the surrounding cardinal direction to determine its future direction
+        else{
+            if(cpuDirection===''){   
+                let locInCardinal=Math.floor(Math.random()*cardinalArray.length)
+                let cardinalLoc=cardinalArray[locInCardinal].position;
+
+                if(!(gameBoard[cardinalLoc]==='empty')){
+                    cpuDirection={ 
+                        direction:cardinalArray[locInCardinal].cardDirection,
+                        value:cardinals[cardinalArray[locInCardinal].cardDirection],
+                        currentLoc:cardinalLoc,
+                    };
+                    cardinalArray.splice(locInCardinal,1);
+                    remIndex=availableSquares.indexOf(cardinalLoc)
+                    availableSquares.splice(remIndex,1)
+                    shipName=gameBoard[cardinalLoc]
+                    
+
+                    for(let i=0; i<shipArray.length; i++){
+                        if(shipArray[i].getName()===shipName){
+                            shipArray[i].hit();
+                            gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
+                            if(shipArray[i].isSunk()){
+                                cpuDirection='';
+                                cardinalArray=[];
+                                return{
+                                    gameBoard:gameBoard,
+                                    shipName:shipName,
+                                }
+                            }
+                        }
+            
+                    }
+                }
+                else{
+                    remIndex=(availableSquares.indexOf(cardinalLoc))
+                    availableSquares.splice(remIndex,1)
+                    cardinalArray.splice(locInCardinal,1);
+                    gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
+                    return {gameBoard:gameBoard};
+                }
+            }
+            //end of branch no direction
+            else{
+                nextLoc=cpuDirection.value+cpuDirection.currentLoc;
+                if(gameBoard[nextLoc].includes('disabled')){
+                    let newCardArray=[];
+                    for(let i=0; i<cardinalArray.length; i++){
+                        if(cardinalArray[i].value===(cpuDirection.value*-1)){
+                            newCardArray.push(cardinalArray[i]);
+                            break;
+                        }
+                    }
+                    cardinalArray=newCardArray;
+
+                    let locInCardinal=Math.floor(Math.random()*cardinalArray.length)
+                    let cardinalLoc=cardinalArray[locInCardinal].position;
+    
+                    if(!(gameBoard[cardinalLoc]==='empty')){
+                        cpuDirection={ 
+                            direction:cardinalArray[locInCardinal].cardDirection,
+                            value:cardinals[cardinalArray[locInCardinal].cardDirection],
+                            currentLoc:cardinalLoc,
+                        };
+                        cardinalArray.splice(locInCardinal,1);
+                        remIndex=availableSquares.indexOf(cardinalLoc)
+                        availableSquares.splice(remIndex,1)
+                        shipName=gameBoard[cardinalLoc]
+                        
+    
+                        for(let i=0; i<shipArray.length; i++){
+                            if(shipArray[i].getName()===shipName){
+                                shipArray[i].hit();
+                                gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
+                                if(shipArray[i].isSunk()){
+                                    cpuDirection='';
+                                    cardinalArray=[];
+                                    return{
+                                        gameBoard:gameBoard,
+                                        shipName:shipName,
+                                    }
+                                }
+                            }
+                
+                        }
+                    }
+                    else{
+                        remIndex=(availableSquares.indexOf(cardinalLoc))
+                        availableSquares.splice(remIndex,1)
+                        cardinalArray.splice(locInCardinal,1);
+                        gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
+                        return {gameBoard:gameBoard};
+                    }
+                }
+                else if(gameBoard[nextLoc]==='empty'){
+                    gameBoard[nextLoc]=gameBoard[nextLoc]+' disabled';
+                    remIndex=(availableSquares.indexOf(nextLoc))
+                    availableSquares.splice(remIndex,1)
+                    let newCardArray=[];
+                    for(let i=0; i<cardinalArray.length; i++){
+                        if(cardinalArray[i].value===(cpuDirection.value*-1)){
+                            newCardArray.push(cardinalArray[i]);
+                            break;
+                        }
+                    }
+                    cardinalArray=newCardArray;
+                    cpuDirection=''
+                    return {gameBoard:gameBoard};
+                }
+                else{
+                    cpuDirection.currentLoc=nextLoc;
+                    shipName=gameBoard[nextLoc];
+                    gameBoard[nextLoc]=gameBoard[nextLoc]+' disabled';
+                    remIndex=(availableSquares.indexOf(nextLoc))
+                    availableSquares.splice(remIndex,1)
+                    for(let i=0; i<shipArray.length; i++){
+                        if(shipArray[i].getName()===shipName){
+                            shipArray[i].hit();
+                            if(shipArray[i].isSunk()){
+                                cpuDirection='';
+                                cardinalArray=[];
+                                return{
+                                    gameBoard:gameBoard,
+                                    shipName:shipName,
+                                }
+                            }
+                        }
+        
+                }
+
+                }
+            }
+        }
         return {gameBoard:gameBoard};
+        
+
 
     }
 

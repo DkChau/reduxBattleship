@@ -28,6 +28,6 @@ export default createStore (
         statusDisplay:'',
         gameEnd:false,
     },
-    applyMiddleware(logger),
+    // applyMiddleware(logger),
 )
 

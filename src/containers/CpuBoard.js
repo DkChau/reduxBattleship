@@ -20,7 +20,7 @@ function CpuBoard (props) {
                             value={index} 
                             key={uniqid()} 
                             onClick={registerHit} 
-                            className={square==='empty' ? 'empty' : square}
+                            className={square==='empty' ? 'empty' : square + ' cpu'}
                             disabled={square.includes('disabled') || props.whoseTurn==='cpu'}>
                         </button>
                     )
