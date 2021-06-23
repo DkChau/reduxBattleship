@@ -85,7 +85,7 @@ const Board = () => {
             availableSquares.splice(randomLoc,1);
             if(!(gameBoard[loc]==='empty')){
                 for(let key in cardinals){ //INCASE ANYTHING MESSES UP ITS BECAUSE OF THIS MODULUS BECAUSE IT WORKED PERFECT BEFORE IT
-                    if(availableSquares.includes(loc+cardinals[key]) && (loc+cardinals[key])%10!=0){
+                    if(availableSquares.includes(loc+cardinals[key]) && !((loc+cardinals[key])%10===0)){
                         cardinalArray.push({
                             cardDirection:key,
                             position:(loc+cardinals[key]),
@@ -159,14 +159,14 @@ const Board = () => {
             else{
                 nextLoc=cpuDirection.value+cpuDirection.currentLoc;
                 if(gameBoard[nextLoc].includes('disabled')){
-                    let newCardArray=[];
-                    for(let i=0; i<cardinalArray.length; i++){
-                        if(cardinalArray[i].value===(cpuDirection.value*-1)){
-                            newCardArray.push(cardinalArray[i]);
-                            break;
-                        }
-                    }
-                    cardinalArray=newCardArray;
+                    // let newCardArray=[];
+                    // for(let i=0; i<cardinalArray.length; i++){
+                    //     if(cardinalArray[i].value===(cpuDirection.value*-1)){
+                    //         newCardArray.push(cardinalArray[i]);
+                    //         break;
+                    //     }
+                    // }
+                    // cardinalArray=newCardArray;
 
                     let locInCardinal=Math.floor(Math.random()*cardinalArray.length)
                     let cardinalLoc=cardinalArray[locInCardinal].position;

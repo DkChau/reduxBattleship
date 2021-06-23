@@ -11,6 +11,7 @@ function GameEnd(props){
             <div>
                 GAME OVER
             </div>
+            <div>{props.whoWon} HAS WON</div>
             <button onClick={endGame}>PLAY AGAIN</button>
         </div>
 
@@ -19,7 +20,8 @@ function GameEnd(props){
 }
 const mapStateToProps = state => {
     return {
-        gameEnd:state.gameEnd
+        gameEnd:state.gameEnd,
+        whoWon:state.whoWon,
     }
 }
 

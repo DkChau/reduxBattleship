@@ -25,8 +25,10 @@ export default createStore (
             PatrolBoat:false,
         },
         whoseTurn:'player',
-        statusDisplay:'',
+        statusDisplay:'Place your ships and press start game to begin',
         gameEnd:false,
+        whoWon:'',
+        shipDirection:'Horizontal',
     },
     // applyMiddleware(logger),
 )

@@ -13,19 +13,22 @@ function CpuBoard (props) {
     }
     return(
         <div className={props.gameState===true ? 'userBoardContainer' : 'hidden'}>
-            <ul className='userBoard'>
-                {props.cpu.gameBoard.map((square,index)=>{
-                    return (
-                        <button  
-                            value={index} 
-                            key={uniqid()} 
-                            onClick={registerHit} 
-                            className={square==='empty' ? 'empty' : square + ' cpu'}
-                            disabled={square.includes('disabled') || props.whoseTurn==='cpu'}>
-                        </button>
-                    )
-                })}
-            </ul>
+            <div>
+                <div className='boardTitle'>Enemy waters</div>
+                <ul className='userBoard'>
+                    {props.cpu.gameBoard.map((square,index)=>{
+                        return (
+                            <button  
+                                value={index} 
+                                key={uniqid()} 
+                                onClick={registerHit} 
+                                className={square==='empty' ? 'empty' : square + ' cpu'}
+                                disabled={square.includes('disabled') || props.whoseTurn==='cpu'}>
+                            </button>
+                        )
+                    })}
+                </ul>
+            </div>
         </div>
     )
 }

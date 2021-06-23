@@ -47,3 +47,12 @@ export function gameOver(){
         }
     }
 }
+
+export function changeDirection(){
+    return{
+        type:'CHANGE_DIRECTION',
+        payload:{
+
+        }
+    }
+}

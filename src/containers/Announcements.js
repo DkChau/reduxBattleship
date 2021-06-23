@@ -5,11 +5,17 @@ import React from 'react'
 import {connect} from 'react-redux';
 
 function Announcements (props) {
-    let turnDisplay=(props.whoseTurn==='player' ? 'Player\'s turn' : 'Cpu\'s Turn');
+    let turnDisplay=''
+    if(props.gameState===true){
+        turnDisplay=(props.whoseTurn==='player' ? 'Player\'s turn' : 'Cpu\'s Turn');
+    }
+    else{
+        turnDisplay='BATTLESHIP'
+    }
     return(
         <div className='announcementContainer'>
-            <div>{turnDisplay}</div>
-            <div>{props.statusDisplay}</div>
+            <div className='turnAnnouncement'>{turnDisplay}</div>
+            <div className='statusAnnouncement'>{props.statusDisplay}</div>
         </div>
     )
 }
@@ -18,6 +24,7 @@ const mapStateToProps = state => {
     return {
         whoseTurn:state.whoseTurn,
         statusDisplay:state.statusDisplay,
+        gameState:state.gameState,
     }
 }
 

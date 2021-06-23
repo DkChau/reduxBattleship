@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {connect} from 'react-redux';
-import {placeShip,resetBoard,gameStart} from '../actions/boardActions';
+import {placeShip,resetBoard,gameStart,changeDirection} from '../actions/boardActions';
 import uniqid from 'uniqid'
 
 function UserBoard (props) {
@@ -9,7 +9,7 @@ function UserBoard (props) {
     let selectedShip=undefined;
     let selectedPart=undefined;
 
-    const [direction,setDirection]=useState('Horizontal')
+    //Change direction add to state
 
     const shipPart=(e)=>{
         selectedPart=e.target.id.slice(-1);
@@ -35,39 +35,43 @@ function UserBoard (props) {
     }
     const containerDirection=(e)=>{
         props.player.changeDirections();
-        setDirection(props.player.getDirections());
+        props.changeDirection();
 
     }
     const boardReset=()=>{
         props.resetBoard();
-        setDirection('Horizontal');
     }
     const startGame=()=>{
         props.gameStart();
 
     }
     return(
-        <div className='userBoardContainer'>
-            <ul className='userBoard' onDrop={onDrop} onDragOver={onDragOver}>
-                {props.player.playerBoard.gameBoard.map((square,index)=>{
-                    return(
-                        <button key={uniqid()} value={index} 
-                        className={square==='empty' ? 'empty' : square}>
-                        </button>
-                    )
-                })}
-                <button 
-                    className='changeDirection' 
-                    onClick={props.player.shipArray.length===0 ? startGame : containerDirection}>
-                    {props.player.shipArray.length===0 ? 'Start Game' : 'Change Direction'}
-                </button>
-                <button className='resetBoard' onClick={boardReset}>Reset Board</button>
-            </ul>
-            <div className={props.gameState===true?'hidden':''}>
-                <div className={direction==='Horizontal' ? 'shipContainer Horizontal' : 'shipContainer Vertical'}>
+        <div className={props.gameState===true ? 'userBoardContainer' : 'userBoardContainer single'}>
+            <div>
+                <div className='boardTitle'>Player Waters</div>
+                <ul className='userBoard' onDrop={onDrop} onDragOver={onDragOver}>
+                    {props.player.playerBoard.gameBoard.map((square,index)=>{
+                        return(
+                            <button key={uniqid()} value={index} 
+                            className={square==='empty' ? 'empty' : square}>
+                            </button>
+                        )
+                    })}
+                </ul>
+                <div className='buttonWrapper'>
+                    <button 
+                            className={props.gameState===true ?'hidden' :'changeDirection' }
+                            onClick={props.player.shipArray.length===0 ? startGame : containerDirection}>
+                            {props.player.shipArray.length===0 ? 'Start Game' : 'Change Direction'}
+                    </button>
+                    <button className={props.gameState===true ?'hidden' :'resetBoard' } onClick={boardReset}>Reset Board</button>
+                </div>
+            </div>
+            <div className={props.gameState===true?'hidden':'allShipsContainer'}>
+                <div className={props.shipDirection==='Horizontal' ? 'shipContainer Horizontal' : 'shipContainer Vertical'}>
                     {props.player.shipArray.map(ship=>{
                         return(
-                            <div className={direction==='Horizontal' ? 'ship Horizontal' : 'ship Vertical'}
+                            <div className={props.shipDirection==='Horizontal' ? 'ship Horizontal' : 'ship Vertical'}
                             id={ship.getName()} draggable={true} key={uniqid()} onDragStart={onDragStart}>
                                 {ship.shipDisplay.map(square=>{
                                     return (
@@ -88,7 +92,8 @@ function UserBoard (props) {
 const mapStateToProps = state => {
     return {
         player:state.player,
-        gameState:state.gameState
+        gameState:state.gameState,
+        shipDirection:state.shipDirection
     }
 }
 
@@ -102,6 +107,9 @@ const mapDispatchToProps=dispatch=>{
         },
         gameStart:()=>{
             dispatch(gameStart())
+        },
+        changeDirection:()=>{
+            dispatch(changeDirection())
         }
     } 
 };

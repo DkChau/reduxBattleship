@@ -9,6 +9,7 @@ const boardReducer = (state,action) =>{
     let tempPlayer=_.cloneDeep(state.player);
     let tempStatus=_.cloneDeep(state.statusDisplay);
     let tempGameEnd=false;
+    let tempWon='';
     switch(action.type){
         case 'PLACE_SHIP':
             let index=-1;
@@ -52,13 +53,20 @@ const boardReducer = (state,action) =>{
                     PatrolBoat:false,
                 },
                 whoseTurn:'player',
-                statusDisplay:'',
-                gameEnd:false,}
+                statusDisplay:'Place your ships and press start game to begin',
+                gameEnd:false,
+                whoWon:'',
+                shipDirection:'Horizontal',
+            }
+            break;
+        case 'CHANGE_DIRECTION':
+            if(state.shipDirection==='Horizontal'){state={...state,shipDirection:'Vertical'}}
+            else{state={...state,shipDirection:'Horizontal'}}
             break;
         case 'START_GAME':
             tempCpu=_.cloneDeep(state.cpu);
             tempCpu.gameBoard=tempCpu.generateShips();
-            state={...state,gameState:true,cpu:tempCpu};
+            state={...state,gameState:true,cpu:tempCpu,statusDisplay:''};
             break;
         case 'CPU_HIT':
             if(state.gameEnd===true){
@@ -84,13 +92,15 @@ const boardReducer = (state,action) =>{
                     }
                 }
             }
+            tempWon=tempGameEnd===true ? 'PLAYER' : '';
             state={
                 ...state,
                 cpu:tempCpu,
                 cpuShips:cpuShips,
                 whoseTurn:'cpu',
                 statusDisplay:tempStatus,
-                gameEnd:tempGameEnd
+                gameEnd:tempGameEnd,
+                whoWon:tempWon
             };
 
             break;
@@ -116,13 +126,15 @@ const boardReducer = (state,action) =>{
                     }
                 }
             }
+            tempWon=tempGameEnd===true ? 'CPU' : '';
             state={
                 ...state,
                 player:tempPlayer,
                 playerShips:playerShips,
                 whoseTurn:'player',
                 statusDisplay:tempStatus,
-                gameEnd:tempGameEnd
+                gameEnd:tempGameEnd,
+                whoWon:tempWon
             }
             break;
         case 'GAME_OVER':
@@ -145,8 +157,11 @@ const boardReducer = (state,action) =>{
                     PatrolBoat:false,
                 },
                 whoseTurn:'player',
-                statusDisplay:'',
-                gameEnd:false,}
+                statusDisplay:'Place your ships and press start game to begin',
+                gameEnd:false,
+                whoWon:'',
+                shipDirection:'Horizontal',
+            }
         default:
             break;
     }

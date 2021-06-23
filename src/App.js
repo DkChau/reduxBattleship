@@ -14,8 +14,8 @@ function App() {
       <div id='boardContainers'>
         <ShipsRemainingPlayer/>
         <UserBoard></UserBoard>
-        <ShipsRemainingCpu/>
         <CpuBoard></CpuBoard>
+        <ShipsRemainingCpu/>
       </div>
       <GameEnd/>
     </Provider>
