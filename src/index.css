@@ -33,6 +33,7 @@ ul{
     line-height: 60px;
     width:400px;
     padding:20px;
+    box-shadow: #25274D;
     border:1px solid #aaabb8;
 }
 .statusAnnouncement{
@@ -43,9 +44,11 @@ ul{
 /* UserBoard component css */
 #boardContainers{
     display:grid;
-    grid-template-columns: 200px 600px 600px 200px;
-    grid-gap: 5px;
+    grid-template-columns: auto 500px 500px auto;
+    grid-gap: 20px;
     justify-content:center;
+    margin:0 auto;
+    max-width:auto;
     height:100%;
     align-content: center;
 }
@@ -184,7 +187,7 @@ button:hover{
     grid-template-rows: repeat(3, auto);
     grid-gap: 20px;
     font-size: 60px;
-    opacity:85%;
+    opacity:0.85;
 }
 .gameOver button{
     width:300px;

@@ -137,7 +137,7 @@ const Board = () => {
                             gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
                             if(shipArray[i].isSunk()){
                                 cpuDirection='';
-                                cardinalArray=[];
+                                // cardinalArray=[];
                                 return{
                                     gameBoard:gameBoard,
                                     shipName:shipName,
@@ -189,7 +189,7 @@ const Board = () => {
                                 gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
                                 if(shipArray[i].isSunk()){
                                     cpuDirection='';
-                                    cardinalArray=[];
+                                    // cardinalArray=[];
                                     return{
                                         gameBoard:gameBoard,
                                         shipName:shipName,
@@ -233,7 +233,7 @@ const Board = () => {
                             shipArray[i].hit();
                             if(shipArray[i].isSunk()){
                                 cpuDirection='';
-                                cardinalArray=[];
+                                // cardinalArray=[];
                                 return{
                                     gameBoard:gameBoard,
                                     shipName:shipName,
