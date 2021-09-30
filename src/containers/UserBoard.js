@@ -48,7 +48,7 @@ function UserBoard (props) {
     return(
         <div className={props.gameState===true ? 'userBoardContainer' : 'userBoardContainer single'}>
             <div>
-                <div className='boardTitle'>Player Waters</div>
+                <div className='boardTitle'>{props.gameState===true ? 'Player Waters' : ''}</div>
                 <ul className='userBoard' onDrop={onDrop} onDragOver={onDragOver}>
                     {props.player.playerBoard.gameBoard.map((square,index)=>{
                         return(
