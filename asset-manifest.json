@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/reduxBattleship/static/css/main.e7d91c56.chunk.css",
-    "main.js": "/reduxBattleship/static/js/main.5f2a6eef.chunk.js",
-    "main.js.map": "/reduxBattleship/static/js/main.5f2a6eef.chunk.js.map",
+    "main.css": "/reduxBattleship/static/css/main.625eb494.chunk.css",
+    "main.js": "/reduxBattleship/static/js/main.87ad1665.chunk.js",
+    "main.js.map": "/reduxBattleship/static/js/main.87ad1665.chunk.js.map",
     "runtime-main.js": "/reduxBattleship/static/js/runtime-main.ce402b6f.js",
     "runtime-main.js.map": "/reduxBattleship/static/js/runtime-main.ce402b6f.js.map",
     "static/js/2.643e3334.chunk.js": "/reduxBattleship/static/js/2.643e3334.chunk.js",
     "static/js/2.643e3334.chunk.js.map": "/reduxBattleship/static/js/2.643e3334.chunk.js.map",
     "index.html": "/reduxBattleship/index.html",
-    "static/css/main.e7d91c56.chunk.css.map": "/reduxBattleship/static/css/main.e7d91c56.chunk.css.map",
+    "static/css/main.625eb494.chunk.css.map": "/reduxBattleship/static/css/main.625eb494.chunk.css.map",
     "static/js/2.643e3334.chunk.js.LICENSE.txt": "/reduxBattleship/static/js/2.643e3334.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ce402b6f.js",
     "static/js/2.643e3334.chunk.js",
-    "static/css/main.e7d91c56.chunk.css",
-    "static/js/main.5f2a6eef.chunk.js"
+    "static/css/main.625eb494.chunk.css",
+    "static/js/main.87ad1665.chunk.js"
   ]
 }
