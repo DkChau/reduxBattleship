@@ -10,6 +10,7 @@ const boardReducer = (state,action) =>{
     let tempStatus=_.cloneDeep(state.statusDisplay);
     let tempGameEnd=false;
     let tempWon='';
+    
     switch(action.type){
         case 'PLACE_SHIP':
             let index=-1;
@@ -33,6 +34,7 @@ const boardReducer = (state,action) =>{
             }
             state=tempState;
             break;
+
         case 'RESET_BOARD':
             state={        
                 player:Player(),
@@ -63,11 +65,13 @@ const boardReducer = (state,action) =>{
             if(state.shipDirection==='Horizontal'){state={...state,shipDirection:'Vertical'}}
             else{state={...state,shipDirection:'Horizontal'}}
             break;
+
         case 'START_GAME':
             tempCpu=_.cloneDeep(state.cpu);
             tempCpu.gameBoard=tempCpu.generateShips();
             state={...state,gameState:true,cpu:tempCpu,statusDisplay:''};
             break;
+
         case 'CPU_HIT':
             if(state.gameEnd===true){
                 return state;
@@ -104,6 +108,7 @@ const boardReducer = (state,action) =>{
             };
 
             break;
+
         case 'PLAYER_HIT':
             tempStatus='';
             if(state.gameEnd===true){
@@ -137,6 +142,7 @@ const boardReducer = (state,action) =>{
                 whoWon:tempWon
             }
             break;
+
         case 'GAME_OVER':
             state={        
                 player:Player(),
@@ -162,6 +168,7 @@ const boardReducer = (state,action) =>{
                 whoWon:'',
                 shipDirection:'Horizontal',
             }
+            break;
         default:
             break;
     }

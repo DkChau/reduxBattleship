@@ -21,8 +21,6 @@ const Player = () => {
         }
     }
 
-    //Maybe need function to turn shipArray into placedShips
-
     return {getDirections, changeDirections, playerBoard,shipArray};
 }
 

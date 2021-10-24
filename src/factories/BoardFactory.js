@@ -20,6 +20,7 @@ const Board = () => {
     let nextLoc=0;
     let remIndex=0;
 
+    //
     function placeShips(length,name,direction,loc,selectedPart){
         loc=parseInt(loc);
         if(isValid(length,direction,loc,selectedPart))
@@ -84,7 +85,7 @@ const Board = () => {
             let loc=availableSquares[randomLoc];
             availableSquares.splice(randomLoc,1);
             if(!(gameBoard[loc]==='empty')){
-                for(let key in cardinals){ //INCASE ANYTHING MESSES UP ITS BECAUSE OF THIS MODULUS BECAUSE IT WORKED PERFECT BEFORE IT
+                for(let key in cardinals){ 
                     if(availableSquares.includes(loc+cardinals[key]) && !((loc+cardinals[key])%10===0)){
                         cardinalArray.push({
                             cardDirection:key,
@@ -137,7 +138,6 @@ const Board = () => {
                             gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
                             if(shipArray[i].isSunk()){
                                 cpuDirection='';
-                                // cardinalArray=[];
                                 return{
                                     gameBoard:gameBoard,
                                     shipName:shipName,
@@ -159,15 +159,6 @@ const Board = () => {
             else{
                 nextLoc=cpuDirection.value+cpuDirection.currentLoc;
                 if(gameBoard[nextLoc].includes('disabled')){
-                    // let newCardArray=[];
-                    // for(let i=0; i<cardinalArray.length; i++){
-                    //     if(cardinalArray[i].value===(cpuDirection.value*-1)){
-                    //         newCardArray.push(cardinalArray[i]);
-                    //         break;
-                    //     }
-                    // }
-                    // cardinalArray=newCardArray;
-
                     let locInCardinal=Math.floor(Math.random()*cardinalArray.length)
                     let cardinalLoc=cardinalArray[locInCardinal].position;
     
@@ -189,7 +180,6 @@ const Board = () => {
                                 gameBoard[cardinalLoc]=gameBoard[cardinalLoc]+' disabled';
                                 if(shipArray[i].isSunk()){
                                     cpuDirection='';
-                                    // cardinalArray=[];
                                     return{
                                         gameBoard:gameBoard,
                                         shipName:shipName,
@@ -233,7 +223,6 @@ const Board = () => {
                             shipArray[i].hit();
                             if(shipArray[i].isSunk()){
                                 cpuDirection='';
-                                // cardinalArray=[];
                                 return{
                                     gameBoard:gameBoard,
                                     shipName:shipName,

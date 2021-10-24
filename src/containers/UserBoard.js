@@ -9,11 +9,11 @@ function UserBoard (props) {
     let selectedShip=undefined;
     let selectedPart=undefined;
 
-    //Change direction add to state
-
+    //A function to obtain which part of the ship was clicked on exactly
     const shipPart=(e)=>{
         selectedPart=e.target.id.slice(-1);
     }
+
     const onDragStart =(e)=>{
         for(let i=0; i<props.player.shipArray.length; i++){
             if(props.player.shipArray[i].getName()===e.target.id){
@@ -21,6 +21,7 @@ function UserBoard (props) {
             }
         }
     }
+
     const onDrop=(e)=>{
         props.placeShip(
             selectedShip.length,
@@ -30,17 +31,20 @@ function UserBoard (props) {
             selectedPart
         )
     }
+
     const onDragOver=(e)=>{
         e.preventDefault();
     }
+
     const containerDirection=(e)=>{
         props.player.changeDirections();
         props.changeDirection();
-
     }
+
     const boardReset=()=>{
         props.resetBoard();
     }
+
     const startGame=()=>{
         props.gameStart();
 
@@ -64,7 +68,7 @@ function UserBoard (props) {
                             onClick={props.player.shipArray.length===0 ? startGame : containerDirection}>
                             {props.player.shipArray.length===0 ? 'Start Game' : 'Change Direction'}
                     </button>
-                    <button className={props.gameState===true ?'hidden' :'resetBoard' } onClick={boardReset}>Reset Board</button>
+                    <button className={props.gameState===true ?'hidden' :'changeDirection' } onClick={boardReset}>Reset Board</button>
                 </div>
             </div>
             <div className={props.gameState===true?'hidden':'allShipsContainer'}>

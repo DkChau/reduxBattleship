@@ -86,15 +86,6 @@ const cpu=()=>{
         return {gameBoard:gameBoard};
     }
 
-    // function getCurrentHealth(){
-    //     let health=0;
-    //     for(let i=0; i<shipArray.length; i++){
-    //         health+=shipArray[i].getHealth();
-    //     }
-    //     return health;
-
-    // }
-
     return {shipArray, gameBoard, generateShips, hitRegister};
 }
 

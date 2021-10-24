@@ -1,6 +1,3 @@
-//A heading that announces turns and ships sunk
-//and eventually the player/cpu that won
-
 import React from 'react'
 import {connect} from 'react-redux';
 
@@ -12,6 +9,7 @@ function Announcements (props) {
     else{
         turnDisplay='BATTLESHIP'
     }
+
     return(
         <div className='announcementContainer'>
             <div className='turnAnnouncement'>{turnDisplay}</div>
