@@ -2,7 +2,7 @@
   "name": "reduxbattleship",
   "version": "0.1.0",
   "private": true,
-  "homepage":"http://novaark.github.io/reduxBattleship",
+  "homepage":"http://dkchau.github.io/reduxBattleship",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
